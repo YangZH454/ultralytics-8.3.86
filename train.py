@@ -5,20 +5,21 @@ import multiprocessing
 # model(source=0,show=True)
 def main():
     model = YOLO('yolo11n.pt')  # load a pretrained model (recommended for training)
-    model.train(data='test0.yaml', 
-                epochs=200,
-                imgsz=640, 
-                workers=16, 
-                batch = 16,
+    model.train(data='emotion.yml', 
+                epochs=80,
+                imgsz=512, 
+                workers=12, 
+                batch = 32,
                 optimizer = 'SGD',
-                lr0 = 0.01,
-                lrf = 0.1,
+                lr0 = 0.02,
                 patience = 50,
-                cos_lr = True,
-                close_mosaic = 20,
+                close_mosaic = 0,
+                mixup = 0.0,
+                mosaic = 0.5,
+                amp = True
                 )
     print()
-    model.save('test0.pt')
+    model.save('emotion.pt')
 
 if __name__ == '__main__':
     multiprocessing.freeze_support()  # Windows 必加

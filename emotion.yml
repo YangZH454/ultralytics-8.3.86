@@ -1,0 +1,15 @@
+path: .
+
+train: images/train
+val: images/val
+
+names: 
+  0: angry
+  1: contempt
+  2: disgust
+  3: fear
+  4: happy
+  5: natural
+  6: sad
+  7: sleepy
+  8: surprised
