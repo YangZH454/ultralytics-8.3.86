@@ -1,15 +1,27 @@
 from ultralytics import YOLO
+import multiprocessing
+# model(source='./datasets/BVN.mp4')  # run inference on an image or video file(s)
+# results = model.val()  # evaluate model performance on the validation set
+# model(source=0,show=True)
+def main():
+    model = YOLO('yolo11n.pt')  # load a pretrained model (recommended for training)
+    model.train(data='test0.yaml', 
+                epochs=200,
+                imgsz=640, 
+                workers=16, 
+                batch = 16,
+                optimizer = 'SGD',
+                lr0 = 0.01,
+                lrf = 0.1,
+                patience = 50,
+                cos_lr = True,
+                close_mosaic = 20,
+                )
+    print()
+    model.save('test0.pt')
 
-#无论要训练一个识别什么物体的模型 模型的内部架构都是一样的
-model = YOLO("yolo11n.pt")
-
-#模型训练
-model.train(
-    #yaml配置文件路径
-    data="mymodel.yaml",
-    #训练轮数 默认100轮 此处可以减小训练轮数
-    epochs=50,
-    #降低数据加载的工作进程数量 避免windows系统下的多进程数据加载报错
-    workers=0,
-)
+if __name__ == '__main__':
+    multiprocessing.freeze_support()  # Windows 必加
+    main()
+    
 
