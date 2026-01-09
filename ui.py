@@ -258,11 +258,8 @@ class mainWindow(QMainWindow, Ui_MainWindow):
                 del self.image_pixmaps[self.orig_cap_label]
             if self.det_cap_label in self.image_pixmaps:
                 del self.image_pixmaps[self.det_cap_label]
-<<<<<<< HEAD
-=======
             #恢复窗口最小尺寸限制，允许手动调整
             self.setMinimumSize(0, 0)
->>>>>>> 93f972da0d14499d8377a82044990d3f6f93a762
 
     #摄像头图像采集函数
     def cap_image_detect(self):
