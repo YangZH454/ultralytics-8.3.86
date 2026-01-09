@@ -60,8 +60,15 @@ class mainWindow(QMainWindow, Ui_MainWindow):
         #将stackedWidget的当前页码设置为combox_page的当前页码
         self.stackedWidget.setCurrentIndex(page)
         #翻页时需要关闭摄像头 关闭计时器 清空画布
-        self.cap.release()
-        self.cap_timer.stop()
+        self.det_cap_label.clear()
+        self.orig_cap_label.clear()
+        self.det_img_label.clear()
+        self.orig_img_label.clear()
+        if self.cap.isOpened():
+            print("翻页时关闭摄像头")
+            self.pushButton_cap.setText("开启摄像头")
+            self.cap.release()
+            self.cap_timer.stop()
         #恢复窗口最小尺寸限制，允许手动调整
         self.setMinimumSize(0, 0)
 
@@ -344,6 +351,7 @@ class mainWindow(QMainWindow, Ui_MainWindow):
             self.client_socket.connect((self.server_host, self.server_port))
             print(f'已连接到服务器 {self.server_host}:{self.server_port}')
         except Exception as e:
+            self.client_socket = None
             print(f'连接服务器失败：{e}')
             print('检测结果将不会发送到服务器')
 
@@ -438,7 +446,7 @@ class mainWindow(QMainWindow, Ui_MainWindow):
     def video_init(self):
         #视频图像显示定时器初始化
         self.video_timer = QTimer()
-        self.video_timer.setInterval(30)
+        self.video_timer.setInterval(1)
         self.video_timer.setTimerType(Qt.PreciseTimer)
         #视频选择信号与槽
         self.pushButton_video.clicked.connect(self.video_choose)
@@ -466,7 +474,12 @@ class mainWindow(QMainWindow, Ui_MainWindow):
             self.video = cv2.VideoCapture(video_path)
             #获取视频总帧数
             self.video_total_frames = int(self.video.get(cv2.CAP_PROP_FRAME_COUNT))
-            #设置进度条的最大值为视频总帧数
+            
+            self.video_fps = self.video.get(cv2.CAP_PROP_FPS)
+            self.video_timer.setInterval(int(1000 / self.video_fps))
+            self.det_video_label.setText("fps: {:.2f}".format(self.video_fps))
+            
+            #设置视频进度条的最大值为视频总帧数
             self.horizontalSlider_video.setMaximum(self.video_total_frames)
             #初始化当前帧位置为0
             self.video_current_frame = 0
