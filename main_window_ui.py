@@ -339,7 +339,7 @@ class Ui_MainWindow(object):
     # setupUi
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"YOLO目标检测系统", None))
+        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"YOLO\u76ee\u6807\u68c0\u6d4b\u7cfb\u7edf", None))
         self.orig_img_label.setText("")
         self.det_img_label.setText("")
         self.pushButton.setText(QCoreApplication.translate("MainWindow", u"\u56fe\u50cf\u68c0\u6d4b", None))

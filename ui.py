@@ -559,7 +559,6 @@ class mainWindow(QMainWindow, Ui_MainWindow):
         ret, arr = self.video.read()
         #先判断视频是不是读完了
         if ret:
-
             #获取当前视频播放到的帧数
             self.video_current_frame = int(self.video.get(cv2.CAP_PROP_POS_FRAMES))
             #更新进度条的值（不触发valueChanged信号，避免循环调用）
