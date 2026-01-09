@@ -101,6 +101,7 @@ class Ui_MainWindow(object):
         self.det_cap_label = QLabel(self.page_2)
         self.det_cap_label.setObjectName(u"det_cap_label")
         self.det_cap_label.setStyleSheet(u"background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #e0e0e0, stop:1 #bdbdbd);\n"
+"color: rgb(255, 0, 0);\n"
 "border: 2px solid #757575;\n"
 "border-radius: 6px;\n"
 "padding: 2px;")
@@ -205,7 +206,6 @@ class Ui_MainWindow(object):
 
         self.horizontalSlider_video = QSlider(self.page_3)
         self.horizontalSlider_video.setObjectName(u"horizontalSlider_video")
-        self.horizontalSlider_video.setOrientation(Qt.Orientation.Horizontal)
         self.horizontalSlider_video.setStyleSheet(u"QSlider::groove:horizontal {\n"
 "    border: 1px solid #bdbdbd;\n"
 "    height: 8px;\n"
@@ -222,6 +222,7 @@ class Ui_MainWindow(object):
 "QSlider::handle:horizontal:hover {\n"
 "    background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #7c8ff0, stop:1 #8a5fb8);\n"
 "}")
+        self.horizontalSlider_video.setOrientation(Qt.Orientation.Horizontal)
 
         self.verticalLayout_2.addWidget(self.horizontalSlider_video)
 
@@ -292,7 +293,6 @@ class Ui_MainWindow(object):
 
         self.horizontalSlider_model = QSlider(self.centralwidget)
         self.horizontalSlider_model.setObjectName(u"horizontalSlider_model")
-        self.horizontalSlider_model.setOrientation(Qt.Orientation.Horizontal)
         self.horizontalSlider_model.setStyleSheet(u"QSlider::groove:horizontal {\n"
 "    border: 1px solid #bdbdbd;\n"
 "    height: 8px;\n"
@@ -309,6 +309,7 @@ class Ui_MainWindow(object):
 "QSlider::handle:horizontal:hover {\n"
 "    background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #7c8ff0, stop:1 #8a5fb8);\n"
 "}")
+        self.horizontalSlider_model.setOrientation(Qt.Orientation.Horizontal)
 
         self.verticalLayout.addWidget(self.horizontalSlider_model)
 
