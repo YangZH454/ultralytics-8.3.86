@@ -11,17 +11,15 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>YOLO目标检测系统</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(253, 255, 217);
-background-color: rgb(213, 255, 206);
-background-color: rgb(255, 255, 120);
-background-color: rgb(250, 255, 192);</string>
+       <string notr="true">background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #f5f7fa, stop:1 #c3cfe2);
+border-radius: 8px;</string>
       </property>
       <property name="currentIndex">
        <number>1</number>
@@ -33,7 +31,10 @@ background-color: rgb(250, 255, 192);</string>
           <item>
            <widget class="QLabel" name="orig_img_label">
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(171, 244, 255);</string>
+             <string notr="true">background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #e0e0e0, stop:1 #bdbdbd);
+border: 2px solid #757575;
+border-radius: 6px;
+padding: 2px;</string>
             </property>
             <property name="text">
              <string/>
@@ -43,7 +44,10 @@ background-color: rgb(250, 255, 192);</string>
           <item>
            <widget class="QLabel" name="det_img_label">
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(171, 244, 255);</string>
+             <string notr="true">background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #e0e0e0, stop:1 #bdbdbd);
+border: 2px solid #757575;
+border-radius: 6px;
+padding: 2px;</string>
             </property>
             <property name="text">
              <string/>
@@ -55,7 +59,21 @@ background-color: rgb(250, 255, 192);</string>
         <item>
          <widget class="QPushButton" name="pushButton">
           <property name="styleSheet">
-           <string notr="true">background-color: rgb(255, 255, 255);</string>
+           <string notr="true">QPushButton {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #667eea, stop:1 #764ba2);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: bold;
+}
+QPushButton:hover {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #7c8ff0, stop:1 #8a5fb8);
+}
+QPushButton:pressed {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #5568d9, stop:1 #6a3a92);
+}</string>
           </property>
           <property name="text">
            <string>图像检测</string>
@@ -66,7 +84,8 @@ background-color: rgb(250, 255, 192);</string>
       </widget>
       <widget class="QWidget" name="page_2">
        <property name="styleSheet">
-        <string notr="true">background-color: rgb(202, 203, 255);</string>
+        <string notr="true">background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #f5f7fa, stop:1 #c3cfe2);
+border-radius: 8px;</string>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_4">
         <item>
@@ -74,7 +93,10 @@ background-color: rgb(250, 255, 192);</string>
           <item>
            <widget class="QLabel" name="orig_cap_label">
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(171, 244, 255);</string>
+             <string notr="true">background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #e0e0e0, stop:1 #bdbdbd);
+border: 2px solid #757575;
+border-radius: 6px;
+padding: 2px;</string>
             </property>
             <property name="text">
              <string/>
@@ -84,7 +106,10 @@ background-color: rgb(250, 255, 192);</string>
           <item>
            <widget class="QLabel" name="det_cap_label">
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(171, 244, 255);</string>
+             <string notr="true">background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #e0e0e0, stop:1 #bdbdbd);
+border: 2px solid #757575;
+border-radius: 6px;
+padding: 2px;</string>
             </property>
             <property name="text">
              <string/>
@@ -96,7 +121,21 @@ background-color: rgb(250, 255, 192);</string>
         <item>
          <widget class="QPushButton" name="pushButton_cap">
           <property name="styleSheet">
-           <string notr="true">background-color: rgb(255, 255, 255);</string>
+           <string notr="true">QPushButton {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #667eea, stop:1 #764ba2);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: bold;
+}
+QPushButton:hover {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #7c8ff0, stop:1 #8a5fb8);
+}
+QPushButton:pressed {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #5568d9, stop:1 #6a3a92);
+}</string>
           </property>
           <property name="text">
            <string>开启摄像头</string>
@@ -112,7 +151,10 @@ background-color: rgb(250, 255, 192);</string>
           <item>
            <widget class="QLabel" name="orig_video_label">
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(171, 244, 255);</string>
+             <string notr="true">background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #e0e0e0, stop:1 #bdbdbd);
+border: 2px solid #757575;
+border-radius: 6px;
+padding: 2px;</string>
             </property>
             <property name="text">
              <string/>
@@ -122,7 +164,10 @@ background-color: rgb(250, 255, 192);</string>
           <item>
            <widget class="QLabel" name="det_video_label">
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(171, 244, 255);</string>
+             <string notr="true">background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #e0e0e0, stop:1 #bdbdbd);
+border: 2px solid #757575;
+border-radius: 6px;
+padding: 2px;</string>
             </property>
             <property name="text">
              <string/>
@@ -136,7 +181,21 @@ background-color: rgb(250, 255, 192);</string>
           <item>
            <widget class="QPushButton" name="pushButton_video">
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
+             <string notr="true">QPushButton {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #667eea, stop:1 #764ba2);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: bold;
+}
+QPushButton:hover {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #7c8ff0, stop:1 #8a5fb8);
+}
+QPushButton:pressed {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #5568d9, stop:1 #6a3a92);
+}</string>
             </property>
             <property name="text">
              <string>视频检测</string>
@@ -146,7 +205,21 @@ background-color: rgb(250, 255, 192);</string>
           <item>
            <widget class="QPushButton" name="pushButton_video_pause">
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
+             <string notr="true">QPushButton {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #667eea, stop:1 #764ba2);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: bold;
+}
+QPushButton:hover {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #7c8ff0, stop:1 #8a5fb8);
+}
+QPushButton:pressed {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #5568d9, stop:1 #6a3a92);
+}</string>
             </property>
             <property name="text">
              <string>暂停/播放</string>
@@ -160,10 +233,34 @@ background-color: rgb(250, 255, 192);</string>
           <property name="orientation">
            <enum>Qt::Orientation::Horizontal</enum>
           </property>
+          <property name="styleSheet">
+           <string notr="true">QSlider::groove:horizontal {
+    border: 1px solid #bdbdbd;
+    height: 8px;
+    background: #e0e0e0;
+    border-radius: 4px;
+}
+QSlider::handle:horizontal {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #667eea, stop:1 #764ba2);
+    border: 2px solid white;
+    width: 18px;
+    margin: -5px 0;
+    border-radius: 9px;
+}
+QSlider::handle:horizontal:hover {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #7c8ff0, stop:1 #8a5fb8);
+}</string>
+          </property>
          </widget>
         </item>
         <item>
          <widget class="QLabel" name="label_video_progress">
+          <property name="styleSheet">
+           <string notr="true">color: #424242;
+font-size: 13px;
+font-weight: 500;
+padding: 4px;</string>
+          </property>
           <property name="text">
            <string>视频进度：0 / 0</string>
           </property>
@@ -174,20 +271,92 @@ background-color: rgb(250, 255, 192);</string>
      </widget>
     </item>
     <item>
-     <widget class="QComboBox" name="comboBox_page"/>
+     <widget class="QComboBox" name="comboBox_page">
+      <property name="styleSheet">
+       <string notr="true">QComboBox {
+    background: white;
+    border: 2px solid #bdbdbd;
+    border-radius: 6px;
+    padding: 6px;
+    font-size: 13px;
+}
+QComboBox:hover {
+    border-color: #667eea;
+}
+QComboBox::drop-down {
+    border: none;
+    width: 20px;
+}
+QComboBox::down-arrow {
+    image: none;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 6px solid #667eea;
+    margin-right: 5px;
+}</string>
+      </property>
+     </widget>
     </item>
     <item>
-     <widget class="QComboBox" name="comboBox_model"/>
+     <widget class="QComboBox" name="comboBox_model">
+      <property name="styleSheet">
+       <string notr="true">QComboBox {
+    background: white;
+    border: 2px solid #bdbdbd;
+    border-radius: 6px;
+    padding: 6px;
+    font-size: 13px;
+}
+QComboBox:hover {
+    border-color: #667eea;
+}
+QComboBox::drop-down {
+    border: none;
+    width: 20px;
+}
+QComboBox::down-arrow {
+    image: none;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 6px solid #667eea;
+    margin-right: 5px;
+}</string>
+      </property>
+     </widget>
     </item>
     <item>
      <widget class="QSlider" name="horizontalSlider_model">
       <property name="orientation">
        <enum>Qt::Orientation::Horizontal</enum>
       </property>
+      <property name="styleSheet">
+       <string notr="true">QSlider::groove:horizontal {
+    border: 1px solid #bdbdbd;
+    height: 8px;
+    background: #e0e0e0;
+    border-radius: 4px;
+}
+QSlider::handle:horizontal {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #667eea, stop:1 #764ba2);
+    border: 2px solid white;
+    width: 18px;
+    margin: -5px 0;
+    border-radius: 9px;
+}
+QSlider::handle:horizontal:hover {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #7c8ff0, stop:1 #8a5fb8);
+}</string>
+      </property>
      </widget>
     </item>
     <item>
      <widget class="QLabel" name="label_conf">
+      <property name="styleSheet">
+       <string notr="true">color: #424242;
+font-size: 13px;
+font-weight: 500;
+padding: 4px;</string>
+      </property>
       <property name="text">
        <string/>
       </property>

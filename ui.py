@@ -3,7 +3,7 @@ import cv2
 import numpy as np
 import socket
 import json
-from PySide6.QtWidgets import QMainWindow, QApplication, QFileDialog, QLabel, QMessageBox
+from PySide6.QtWidgets import QMainWindow, QApplication, QFileDialog, QLabel, QMessageBox, QSizePolicy
 from PySide6.QtGui import QPixmap, QImage
 from PySide6.QtCore import Qt, QTimer
 from ultralytics import YOLO
@@ -40,6 +40,8 @@ class mainWindow(QMainWindow, Ui_MainWindow):
         self.model_conf_setting()
         #网络通信初始化
         self.network_init()
+        #UI自适应初始化
+        self.ui_adaptive_init()
         #让程序运行的初始界面处于第一页
         self.stackedWidget.setCurrentIndex(0)
 
@@ -66,6 +68,7 @@ class mainWindow(QMainWindow, Ui_MainWindow):
         #添加模型可选条目
         self.comboBox_model.addItem('基础模型')
         self.comboBox_model.addItem('自训练模型1')
+        self.comboBox_model.addItem('表情情绪模型')
         #信号与槽绑定模型选择函数
         self.comboBox_model.currentIndexChanged.connect(self.model_choose)
 
@@ -82,6 +85,9 @@ class mainWindow(QMainWindow, Ui_MainWindow):
         elif page == 1:
             self.model = YOLO('runs/detect/train/weights/best.pt')
             print('自训练模型1')
+        elif page == 2:
+            self.model = YOLO('emotion.pt')
+            
 
     #模型置信度阈值实施修改
     def model_conf_setting(self):
@@ -133,16 +139,56 @@ class mainWindow(QMainWindow, Ui_MainWindow):
             print("用户没有选择文件")
             QMessageBox.information(self, "消息", "用户未选择图像")
 
+    #UI自适应初始化函数
+    def ui_adaptive_init(self):
+        #存储原始图像数据用于窗口大小变化时重新缩放
+        self.image_pixmaps = {}
+        #为所有图像显示Label设置自适应策略
+        image_labels = [self.orig_img_label, self.det_img_label, 
+                       self.orig_cap_label, self.det_cap_label,
+                       self.orig_video_label, self.det_video_label]
+        for label in image_labels:
+            #设置大小策略为Expanding，但设置最小尺寸为0，防止内容过大时窗口自动拉大
+            label.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+            label.setMinimumSize(0, 0)
+            #设置对齐方式为居中
+            label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+            #不自动缩放内容，由我们手动控制
+            label.setScaledContents(False)
+
     #检测结果显示 将传入的图像矩阵显示到指定的画布上 限制函数的传参类型
     def detection_img_show(self, arr:np.ndarray, place:QLabel):
         #将图像矩阵转换为QImage对象
         qimage_arr = convert2QImage(arr)
         #将QImage对象转换为QPixmap对象
         qpixmap_arr = QPixmap.fromImage(qimage_arr)
-        #剪裁获取到的图像数据
-        det_img = qpixmap_arr.scaled(place.size(), Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation)
-        #在指定的label画布显示捕获到的图像
-        place.setPixmap(det_img)
+        #保存原始图像数据
+        self.image_pixmaps[place] = qpixmap_arr
+        #更新显示
+        self.update_image_display(place)
+
+    #更新图像显示函数
+    def update_image_display(self, label:QLabel):
+        #如果该label有保存的图像数据
+        if label in self.image_pixmaps:
+            pixmap = self.image_pixmaps[label]
+            #获取label的当前可用大小
+            label_size = label.size()
+            #如果label大小有效，则缩放图像
+            if label_size.width() > 0 and label_size.height() > 0:
+                #使用label的当前大小进行缩放，确保不会超出label范围
+                scaled_pixmap = pixmap.scaled(label_size, Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation)
+                #设置pixmap，但不让它影响label的大小
+                #使用setPixmap而不是setScaledContents，确保布局控制大小
+                label.setPixmap(scaled_pixmap)
+
+    #重写窗口大小变化事件
+    def resizeEvent(self, event):
+        #调用父类方法
+        super().resizeEvent(event)
+        #更新所有图像显示
+        for label in self.image_pixmaps.keys():
+            self.update_image_display(label)
 
     #摄像头初始化函数
     def cap_init(self):
@@ -188,6 +234,11 @@ class mainWindow(QMainWindow, Ui_MainWindow):
             #显示画布需要清空
             self.orig_cap_label.clear()
             self.det_cap_label.clear()
+            #清理保存的图像数据
+            if self.orig_cap_label in self.image_pixmaps:
+                del self.image_pixmaps[self.orig_cap_label]
+            if self.det_cap_label in self.image_pixmaps:
+                del self.image_pixmaps[self.det_cap_label]
 
     #摄像头图像采集函数
     def cap_image_detect(self):
@@ -372,7 +423,8 @@ class mainWindow(QMainWindow, Ui_MainWindow):
     def video_init(self):
         #视频图像显示定时器初始化
         self.video_timer = QTimer()
-        self.video_timer.setInterval(1)
+        self.video_timer.setInterval(30)
+        self.video_timer.setTimerType(Qt.PreciseTimer)
         #视频选择信号与槽
         self.pushButton_video.clicked.connect(self.video_choose)
         #视频暂停/播放按钮信号与槽
@@ -407,6 +459,10 @@ class mainWindow(QMainWindow, Ui_MainWindow):
             self.video_is_paused = False
             #更新进度条显示
             self.label_video_progress.setText(f'视频进度：0 / {self.video_total_frames}')
+            #确保窗口大小不会因为视频内容而自动调整
+            #保存当前窗口大小，防止自动调整
+            current_size = self.size()
+            self.setMinimumSize(current_size)
             #开启定时器 开始播放视频并检测
             self.video_timer.start()
         else:
@@ -505,6 +561,13 @@ class mainWindow(QMainWindow, Ui_MainWindow):
             self.video_is_paused = False
             self.orig_video_label.clear()
             self.det_video_label.clear()
+            #清理保存的图像数据
+            if self.orig_video_label in self.image_pixmaps:
+                del self.image_pixmaps[self.orig_video_label]
+            if self.det_video_label in self.image_pixmaps:
+                del self.image_pixmaps[self.det_video_label]
+            #恢复窗口最小尺寸限制，允许手动调整
+            self.setMinimumSize(0, 0)
 
 #main函数
 if __name__ == "__main__":
