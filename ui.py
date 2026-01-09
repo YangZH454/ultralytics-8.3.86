@@ -19,7 +19,7 @@ def convert2QImage(img):
 #为了让界面能够显示 需要自行封装一个类 既可以调用show函数 又可以访问界面
 #所以需要继承两个类
 class mainWindow(QMainWindow, Ui_MainWindow):
-    def __init__(self):
+    def __init__(self, argv):
         #还需要手动调用QMainWindow的构造函数
         super(mainWindow, self).__init__()
         #页面绘制
@@ -28,6 +28,8 @@ class mainWindow(QMainWindow, Ui_MainWindow):
         self.model = YOLO("yolo11n.pt")
         #信号与槽绑定，将按钮被按下的信号与对应的槽函数进行绑定
         self.pushButton.clicked.connect(self.get_image_path)
+
+        self.argv = argv
         #调用页面初始化函数
         self.page_init()
         #摄像头初始化
@@ -343,8 +345,8 @@ class mainWindow(QMainWindow, Ui_MainWindow):
         #初始化客户端套接字
         self.client_socket = None
         #服务器地址和端口
-        self.server_host = 'localhost'
-        self.server_port = 8888
+        self.server_host = self.argv[1] if len(self.argv) > 1 else 'localhost'
+        self.server_port = int(self.argv[2]) if len(self.argv) > 2 else 8888
         #尝试连接服务器
         try:
             self.client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -602,7 +604,7 @@ if __name__ == "__main__":
     #要先准备一个QApplication对象
     app = QApplication(sys.argv)
     #实例化一个ui对象
-    ui = mainWindow()
+    ui = mainWindow(sys.argv)
     #调用show函数 显示界面
     ui.show()
     #使用事件循环机制让程序不退出
