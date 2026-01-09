@@ -107,6 +107,7 @@ padding: 2px;</string>
            <widget class="QLabel" name="det_cap_label">
             <property name="styleSheet">
              <string notr="true">background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #e0e0e0, stop:1 #bdbdbd);
+color: rgb(255, 0, 0);
 border: 2px solid #757575;
 border-radius: 6px;
 padding: 2px;</string>
@@ -230,9 +231,6 @@ QPushButton:pressed {
         </item>
         <item>
          <widget class="QSlider" name="horizontalSlider_video">
-          <property name="orientation">
-           <enum>Qt::Orientation::Horizontal</enum>
-          </property>
           <property name="styleSheet">
            <string notr="true">QSlider::groove:horizontal {
     border: 1px solid #bdbdbd;
@@ -250,6 +248,9 @@ QSlider::handle:horizontal {
 QSlider::handle:horizontal:hover {
     background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #7c8ff0, stop:1 #8a5fb8);
 }</string>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Orientation::Horizontal</enum>
           </property>
          </widget>
         </item>
@@ -326,9 +327,6 @@ QComboBox::down-arrow {
     </item>
     <item>
      <widget class="QSlider" name="horizontalSlider_model">
-      <property name="orientation">
-       <enum>Qt::Orientation::Horizontal</enum>
-      </property>
       <property name="styleSheet">
        <string notr="true">QSlider::groove:horizontal {
     border: 1px solid #bdbdbd;
@@ -346,6 +344,9 @@ QSlider::handle:horizontal {
 QSlider::handle:horizontal:hover {
     background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #7c8ff0, stop:1 #8a5fb8);
 }</string>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Orientation::Horizontal</enum>
       </property>
      </widget>
     </item>
