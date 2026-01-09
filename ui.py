@@ -62,6 +62,8 @@ class mainWindow(QMainWindow, Ui_MainWindow):
         #翻页时需要关闭摄像头 关闭计时器 清空画布
         self.cap.release()
         self.cap_timer.stop()
+        #恢复窗口最小尺寸限制，允许手动调整
+        self.setMinimumSize(0, 0)
 
     #模型切换初始化
     def model_init(self):
@@ -95,6 +97,8 @@ class mainWindow(QMainWindow, Ui_MainWindow):
         self.model_conf = 0.25
         #在指定位置显示初始conf值
         self.label_conf.setText(f'模型置信度阈值：0.25')
+
+        self.horizontalSlider_model.setValue(25)
         #滑动条在滑动时 会产生数值变化信号 将这个信号与conf修改函数进行绑定
         self.horizontalSlider_model.valueChanged.connect(self.conf_value_change)
 
@@ -116,6 +120,10 @@ class mainWindow(QMainWindow, Ui_MainWindow):
         #判断path的第一个成员是否为空（用户是不是选择了文件）
         #没有必要强行判断path[0]是不是假 因为如果不是假 就是真
         if path[0]:
+            #确保窗口大小不会因为图像内容而自动调整
+            #保存当前窗口大小，防止自动调整
+            current_size = self.size()
+            self.setMinimumSize(current_size)
             #提取出元组中的文件路径
             image_path = path[0]
             #将图像路径传参给model对象
@@ -213,6 +221,10 @@ class mainWindow(QMainWindow, Ui_MainWindow):
             #判断摄像头是否成功打开
             if ret:
                 print("摄像头打开成功")
+                #确保窗口大小不会因为摄像头图像而自动调整
+                #保存当前窗口大小，防止自动调整
+                current_size = self.size()
+                self.setMinimumSize(current_size)
                 #开启成功后 修改按钮文本信息为关闭 因为下一次按按钮就是做关闭操作了
                 self.pushButton_cap.setText("关闭摄像头")
                 #开启定时器 定时获取摄像头图像
@@ -239,6 +251,11 @@ class mainWindow(QMainWindow, Ui_MainWindow):
                 del self.image_pixmaps[self.orig_cap_label]
             if self.det_cap_label in self.image_pixmaps:
                 del self.image_pixmaps[self.det_cap_label]
+<<<<<<< HEAD
+=======
+            #恢复窗口最小尺寸限制，允许手动调整
+            self.setMinimumSize(0, 0)
+>>>>>>> 93f972da0d14499d8377a82044990d3f6f93a762
 
     #摄像头图像采集函数
     def cap_image_detect(self):
@@ -248,6 +265,7 @@ class mainWindow(QMainWindow, Ui_MainWindow):
         ret, arr = self.cap.read()
         #判断图像矩阵是否被读到
         if ret:
+            arr = cv2.flip(arr, 1)
             #将摄像头采集到的单帧图像数据显示到左侧画布上
             self.detection_img_show(arr, self.orig_cap_label)
             #将图像矩阵作为模型检测的传参进行检测
