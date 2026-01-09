@@ -477,6 +477,7 @@ class mainWindow(QMainWindow, Ui_MainWindow):
             
             self.video_fps = self.video.get(cv2.CAP_PROP_FPS)
             self.video_timer.setInterval(int(1000 / self.video_fps))
+            self.det_video_label.setText("fps: {:.2f}".format(self.video_fps))
             
             #设置视频进度条的最大值为视频总帧数
             self.horizontalSlider_video.setMaximum(self.video_total_frames)
@@ -559,7 +560,6 @@ class mainWindow(QMainWindow, Ui_MainWindow):
         ret, arr = self.video.read()
         #先判断视频是不是读完了
         if ret:
-
             #获取当前视频播放到的帧数
             self.video_current_frame = int(self.video.get(cv2.CAP_PROP_POS_FRAMES))
             #更新进度条的值（不触发valueChanged信号，避免循环调用）
@@ -574,15 +574,6 @@ class mainWindow(QMainWindow, Ui_MainWindow):
             result = self.model(source = arr, verbose = False, conf = self.model_conf)
             #提取带检测框的图像矩阵
             det_arr = result[0].plot()
-            cv2.putText(
-                det_arr,
-                f"FPS: {self.video_fps:.2f}",
-                (det_arr.shape[1] - 240, 40),
-                cv2.FONT_HERSHEY_SIMPLEX,
-                1.1,
-                (0, 0, 255),
-                2
-            )
             #右侧画布显示带检测框的检测视频
             self.detection_img_show(det_arr, self.det_video_label)
             #将检测结果返回值作为参数传给格式化打印函数
