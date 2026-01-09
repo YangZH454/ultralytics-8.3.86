@@ -619,3 +619,4 @@ if __name__ == "__main__":
     ui.show()
     #使用事件循环机制让程序不退出
     app.exec()
+    
