@@ -3,12 +3,13 @@ import socket
 import json
 import threading
 from datetime import datetime
+import sys
 
 class DetectionServer:
-    def __init__(self, host='localhost', port=8888):
+    def __init__(self, argv):
         #服务器地址和端口
-        self.host = host
-        self.port = port
+        self.host = argv[1] if len(argv) > 1 else 'localhost'
+        self.port = int(argv[2]) if len(argv) > 2 else 8888
         #创建服务器套接字
         self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         #设置套接字选项 允许地址重用
@@ -123,7 +124,7 @@ class DetectionServer:
 #main函数
 if __name__ == "__main__":
     #创建服务器实例
-    server = DetectionServer()
+    server = DetectionServer(sys.argv)
     #启动服务器
     server.start()
 
